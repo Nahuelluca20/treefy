@@ -23,6 +23,9 @@ dependencies:
   kysely-d1:
     specifier: ^0.3.0
     version: 0.3.0(kysely@0.27.4)
+  lucide-react:
+    specifier: ^0.429.0
+    version: 0.429.0(react@18.3.1)
   react:
     specifier: ^18.2.0
     version: 18.3.1
@@ -38,6 +41,9 @@ dependencies:
   remix-hook-form:
     specifier: ^5.0.4
     version: 5.0.4(@remix-run/react@2.11.2)(react-dom@18.3.1)(react-hook-form@7.52.2)(react@18.3.1)
+  remix-themes:
+    specifier: ^1.5.0
+    version: 1.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2)
   tailwind-merge:
     specifier: ^2.5.2
     version: 2.5.2
@@ -5865,6 +5871,14 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /lucide-react@0.429.0(react@18.3.1):
+    resolution: {integrity: sha512-548DahFy7Ey+0OPlOyZ6ipnbGJzewv8gq2DxDrnAzWZ4RN4+3XyIwQXhD4AQvuREFjS1EnbAgOMaYB0VQyaK1g==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+    dependencies:
+      react: 18.3.1
+    dev: false
+
   /magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
     dependencies:
@@ -7385,6 +7399,16 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-hook-form: 7.52.2(react@18.3.1)
+    dev: false
+
+  /remix-themes@1.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2):
+    resolution: {integrity: sha512-U7uUCynxOGDYs2EFu6Ivlfm/hxG6EqfCoIE9wC/L6ozJv0NNOsPIsp7qtUqRGRxLwOWqZk2J77uPz9oraYIBfw==}
+    peerDependencies:
+      '@remix-run/react': '>= 1'
+      '@remix-run/server-runtime': '>= 1'
+    dependencies:
+      '@remix-run/react': 2.11.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.4)
+      '@remix-run/server-runtime': 2.11.2(typescript@5.5.4)
     dev: false
 
   /require-like@0.1.2:
