@@ -2,7 +2,7 @@ name = "treefy"
 compatibility_date = "2024-08-21"
 
 kv_namespaces = [
-  { binding = "treefy-users", id = "2ffee683ab4e449e9af8c7b8cec6e6f7", preview_id = "2ffee683ab4e449e9af8c7b8cec6e6f7" },
+  { binding = "treefy_kv_auth", id = "2ffee683ab4e449e9af8c7b8cec6e6f7", preview_id = "2ffee683ab4e449e9af8c7b8cec6e6f7" },
 ]
 
 
