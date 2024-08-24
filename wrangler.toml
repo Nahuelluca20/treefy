@@ -1,5 +1,10 @@
-name = "how-connect-d1-with-remix"
+name = "treefy"
 compatibility_date = "2024-08-21"
+
+kv_namespaces = [
+  { binding = "treefy-users", id = "2ffee683ab4e449e9af8c7b8cec6e6f7", preview_id = "2ffee683ab4e449e9af8c7b8cec6e6f7" },
+]
+
 
 [[d1_databases]]
 binding = "DB"
