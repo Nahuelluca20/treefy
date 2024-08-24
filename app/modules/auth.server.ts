@@ -3,7 +3,6 @@ import type { AppLoadContext, SessionStorage } from "@remix-run/cloudflare";
 import { createCookieSessionStorage } from "@remix-run/cloudflare";
 import { Authenticator } from "remix-auth";
 import { GoogleStrategy } from "remix-auth-google";
-// import { db } from "db";
 import { User } from "./session.server";
 import { db } from "~/database";
 import { generateUUID } from "utils/uuid";
