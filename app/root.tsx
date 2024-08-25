@@ -6,7 +6,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import stylesheet from "./tailwind.css?url";
+import stylesheet from "./styles/tailwind.css?url";
 import { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
 import {
   ThemeProvider,
