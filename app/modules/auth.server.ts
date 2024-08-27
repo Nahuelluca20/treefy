@@ -58,7 +58,7 @@ export class Auth {
           .selectAll()
           .where("email", "=", email)
           .executeTakeFirst();
-        if (findUser) findUser;
+        if (findUser) return findUser;
 
         const createUser = await db(DB)
           .insertInto("users")
@@ -70,7 +70,6 @@ export class Auth {
           })
           .returning(["id", "email", "name", "profile_image"])
           .executeTakeFirstOrThrow();
-
         return createUser;
       }
     );
