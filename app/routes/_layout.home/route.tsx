@@ -1,4 +1,5 @@
 import { Button } from "~/components/ui/Button";
+import NotesList from "~/components/notes-list";
 
 export default function Home() {
   return (
@@ -13,9 +14,10 @@ export default function Home() {
         <Button>Create Note</Button>
       </header>
 
-      <section className="mt-20">
+      <section className="mt-5">
         <h2 className="text-2xl font-semibold">Notes</h2>
         <hr className="border dark:border-gray-600 border-gray-300" />
+        <NotesList />
       </section>
     </section>
   );
