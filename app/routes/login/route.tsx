@@ -7,7 +7,7 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
   const user = await SessionStorage.readUser(context, request);
   if (!user) return json(null);
 
-  throw redirect("/");
+  throw redirect("/home");
 }
 
 export default function Login() {

@@ -14,7 +14,7 @@ import {
   PreventFlashOnWrongTheme,
   useTheme,
 } from "remix-themes";
-import ModeToggle from "./components/buttons/mode-toggle";
+
 import { themeSessionResolver } from "./routes/theme-sessions.server";
 
 export const links: LinksFunction = () => [
@@ -43,7 +43,6 @@ function App() {
         <Links />
       </head>
       <body className="px-5 max-w-[1200px] w-full mx-auto mt-10 bg-foreground">
-        <ModeToggle />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
