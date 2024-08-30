@@ -20,7 +20,9 @@ export default function Layout() {
     <section className="flex gap-36 items-start">
       <SideBar userName={user.name ?? ""} />
       <hr className="hidden lg:block" />
-      <Outlet />
+      <section className="max-w-[750px] w-full mx-auto px-8 py-6">
+        <Outlet />
+      </section>
     </section>
   );
 }
