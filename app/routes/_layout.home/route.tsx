@@ -1,3 +1,4 @@
+import ModeToggle from "~/components/buttons/mode-toggle";
 import NotesList from "~/components/notes-list";
 import { LinkButton } from "~/components/ui/LinkButton";
 
@@ -5,6 +6,8 @@ export default function Home() {
   return (
     <>
       <header className="flex items-center justify-between mb-6">
+        {/* <ModeT /> */}
+
         <div>
           <h1 className="text-3xl font-bold">Home</h1>
           <p className="dark:text-gray-400 text-gray-600">

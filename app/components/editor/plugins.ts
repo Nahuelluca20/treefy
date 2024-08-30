@@ -1,10 +1,10 @@
 import Paragraph from "@yoopta/paragraph";
 import Blockquote from "@yoopta/blockquote";
 import Callout from "@yoopta/callout";
-import Image from "@yoopta/image";
-import Video from "@yoopta/video";
 import Code from "@yoopta/code";
-import File from "@yoopta/file";
+// import Image from "@yoopta/image";
+// import Video from "@yoopta/video";
+// import File from "@yoopta/file";
 import { HeadingOne, HeadingTwo, HeadingThree } from "@yoopta/headings";
 import { NumberedList, BulletedList, TodoList } from "@yoopta/lists";
 
@@ -18,8 +18,8 @@ export const plugins = [
   NumberedList,
   BulletedList,
   TodoList,
-  Image,
+  // Image,
   Code,
-  Video,
-  File,
+  // Video,
+  // File,
 ];
