@@ -1,9 +1,9 @@
-import { Button } from "~/components/ui/Button";
 import NotesList from "~/components/notes-list";
+import { LinkButton } from "~/components/ui/LinkButton";
 
 export default function Home() {
   return (
-    <section className="max-w-[750px] w-full mx-auto px-4 py-6">
+    <>
       <header className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Home</h1>
@@ -11,7 +11,7 @@ export default function Home() {
             Find all of your notes here
           </p>
         </div>
-        <Button>Create Note</Button>
+        <LinkButton to="/note">Add Note</LinkButton>
       </header>
 
       <section className="mt-5">
@@ -19,6 +19,6 @@ export default function Home() {
         <hr className="border dark:border-gray-600 border-gray-300" />
         <NotesList />
       </section>
-    </section>
+    </>
   );
 }
