@@ -11,7 +11,6 @@ export default function SideBar({ userName }: ISideBar) {
       <h2 className="text-2xl font-semibold">{userName ?? "User"}</h2>
       <ModeToggle />
       <SearchField
-        className="w-full"
         label="Search"
         onBlur={function Qa() {}}
         onChange={function Qa() {}}
