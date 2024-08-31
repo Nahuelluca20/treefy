@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="flex items-center justify-between mb-6">
+      <header className="flex flex-col items-start md:items-center md:flex-row gap-y-2 justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Home</h1>
           <p className="dark:text-gray-400 text-gray-600">

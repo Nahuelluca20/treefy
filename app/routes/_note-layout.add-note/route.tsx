@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from "@remix-run/cloudflare";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { Form } from "@remix-run/react";
 import YooptaEditor, { createYooptaEditor } from "@yoopta/editor";
 import { useMemo, useRef } from "react";
@@ -11,6 +11,11 @@ import { markdown } from "@yoopta/exports";
 import { getFirstHeader } from "utils/strings";
 import { SessionStorage } from "~/modules/session.server";
 import { createNote } from "~/models/note.server";
+
+export async function loader({ context, request }: LoaderFunctionArgs) {
+  await SessionStorage.requireUser(context, request);
+  return null;
+}
 
 export async function action({ context, request }: ActionFunctionArgs) {
   const user = await SessionStorage.requireUser(context, request);

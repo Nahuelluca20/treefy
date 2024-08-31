@@ -33,7 +33,7 @@ const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
 export default function NotesList({ notes }: NotesListProps) {
   return (
     <div className="p-6 rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4">
         Topics - Entry points for Exploration
       </h1>
       <ul className="space-y-2">{renderNotes(notes, null)}</ul>
