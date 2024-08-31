@@ -49,30 +49,28 @@ export default function AddNote() {
   };
 
   return (
-    <div>
-      <Form method="post" onSubmit={handleBeforeSubmit}>
-        <Button type="submit">Save</Button>
-        <input
-          name="title"
-          ref={titleEditorInputRef}
-          type="hidden"
-          value={"Title"}
-        />
-        <input
-          name="editor"
-          ref={editorInputRef}
-          type="hidden"
-          value={markdown.serialize(editor, editor.getEditorValue())}
-        />
-        <YooptaEditor
-          editor={editor}
-          plugins={plugins}
-          placeholder="Type something"
-          tools={TOOLS}
-          marks={MARKS}
-          value={INITIAL_VALUE}
-        />
-      </Form>
-    </div>
+    <Form method="post" onSubmit={handleBeforeSubmit}>
+      <Button type="submit">Save</Button>
+      <input
+        name="title"
+        ref={titleEditorInputRef}
+        type="hidden"
+        value={"Title"}
+      />
+      <input
+        name="editor"
+        ref={editorInputRef}
+        type="hidden"
+        value={markdown.serialize(editor, editor.getEditorValue())}
+      />
+      <YooptaEditor
+        editor={editor}
+        plugins={plugins}
+        placeholder="Type something"
+        tools={TOOLS}
+        marks={MARKS}
+        value={INITIAL_VALUE}
+      />
+    </Form>
   );
 }

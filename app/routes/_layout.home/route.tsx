@@ -7,7 +7,6 @@ import { SessionStorage } from "~/modules/session.server";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const user = await SessionStorage.requireUser(context, request);
-  console.log(user?.id);
   if (!user?.id) throw Error("user id not found");
 
   const list = await notesList(user.id, context.cloudflare.env.DB);
@@ -17,7 +16,6 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 
 export default function Home() {
   const data = useLoaderData<typeof loader>();
-  console.log("data", data);
   const notes = data.map((item) => ({
     id: item.id ?? "",
     title: item.title ?? "",

@@ -12,8 +12,6 @@ type NotesListProps = {
 };
 
 const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
-  console.log("redner", notes);
-
   return notes
     .filter((note) => note.parent_id === parentId)
     .map((note) => (
@@ -33,7 +31,6 @@ const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
 };
 
 export default function NotesList({ notes }: NotesListProps) {
-  console.log(notes);
   return (
     <div className="p-6 rounded-lg">
       <h1 className="text-3xl font-bold mb-4">

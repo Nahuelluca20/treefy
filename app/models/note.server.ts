@@ -39,3 +39,14 @@ export async function notesList(userId: string, d1: D1Database) {
 
   return noteList;
 }
+
+export async function getNoteById(noteId: string, d1: D1Database) {
+  const note = db(d1)
+    .selectFrom("notes")
+    .select("content")
+    .where("id", "=", noteId)
+    .executeTakeFirst();
+  if (note) return note;
+
+  return null;
+}
