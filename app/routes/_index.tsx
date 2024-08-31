@@ -1,9 +1,20 @@
-import { Link } from "@remix-run/react";
+import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { Link, useLoaderData } from "@remix-run/react";
 import { PenLine, BookOpen, Share2, Menu } from "lucide-react";
 import { useState } from "react";
+import { LinkButton } from "~/components/ui/LinkButton";
+import { SessionStorage } from "~/modules/session.server";
+
+export async function loader({ context, request }: LoaderFunctionArgs) {
+  const user = await SessionStorage.requireUser(context, request);
+  if (user) return true;
+
+  return false;
+}
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const user = useLoaderData<typeof loader>();
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -35,12 +46,12 @@ export default function LandingPage() {
           >
             Pricing
           </Link>
-          <Link
-            className="text-sm font-medium text-gray-600 hover:text-gray-900"
-            to="#"
+          <LinkButton
+            className="text-sm font-medium"
+            to={user ? "/home" : "/login"}
           >
-            About
-          </Link>
+            Login
+          </LinkButton>
         </nav>
       </header>
       <main className="flex-1">

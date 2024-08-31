@@ -7,9 +7,11 @@ interface ISideBar {
 
 export default function SideBar({ userName }: ISideBar) {
   return (
-    <aside className="fixed w-full max-w-[190px] xl:max-w-[253px] flex flex-col gap-4 items-start">
-      <h2 className="text-2xl font-semibold">{userName ?? "User"}</h2>
-      <ModeToggle />
+    <aside className="lg:fixed  w-full md:max-w-[190px] xl:max-w-[253px] flex flex-col gap-4 items-start">
+      <div className="w-full flex md:flex-col gap-4 justify-between md:items-start">
+        <h2 className="text-2xl font-semibold">{userName ?? "User"}</h2>
+        <ModeToggle />
+      </div>
       <SearchField
         label="Search"
         onBlur={function Qa() {}}

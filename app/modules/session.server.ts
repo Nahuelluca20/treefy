@@ -101,7 +101,7 @@ export class SessionStorage {
     request: Request,
     returnTo = "/login"
   ) {
-    const maybeUser = SessionStorage.readUser(context, request);
+    const maybeUser = await SessionStorage.readUser(context, request);
     if (!maybeUser) throw redirect(returnTo);
 
     return maybeUser;
