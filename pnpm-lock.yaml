@@ -38,6 +38,9 @@ dependencies:
   '@yoopta/embed':
     specifier: ^4.7.0
     version: 4.7.0(@yoopta/editor@4.7.0)(react-dom@18.3.1)(react@18.3.1)
+  '@yoopta/exports':
+    specifier: ^4.7.0
+    version: 4.7.0(@yoopta/editor@4.7.0)(react-dom@18.3.1)(react@18.3.1)
   '@yoopta/file':
     specifier: ^4.7.0
     version: 4.7.0(@yoopta/editor@4.7.0)(react-dom@18.3.1)(react@18.3.1)
@@ -4746,6 +4749,19 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
+  /@yoopta/exports@4.7.0(@yoopta/editor@4.7.0)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-0/asCqWj+FNAOA8Goy1f2ag0Xzg2AVf8j+r7yXygHp3Fa2ocq895IrcVZf9C1oxZIiA1Lk2oB7OAE+f1Ii9NNg==}
+    peerDependencies:
+      '@yoopta/editor': '>=4.0.0'
+      react: '>=17.0.2'
+      react-dom: '>=17.0.2'
+    dependencies:
+      '@yoopta/editor': 4.7.0(react-dom@18.3.1)(react@18.3.1)(slate-react@0.109.0)(slate@0.103.0)
+      marked: 13.0.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
   /@yoopta/file@4.7.0(@yoopta/editor@4.7.0)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-OxVT7+T/N4Y7Z2f9MucnS6oJxohI1XdKqgeCqXUwmYXaX9lWezd4OE+uDrnc3f3+YkpaAAZB01vFk6kSTUQOjg==}
     peerDependencies:
@@ -7463,6 +7479,12 @@ packages:
     resolution: {integrity: sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /marked@13.0.3:
+    resolution: {integrity: sha512-rqRix3/TWzE9rIoFGIn8JmsVfhiuC8VIQ8IdX5TfzmeBucdY05/0UlzKaw0eVtpcN/OdVFpBk7CjKGo9iHJ/zA==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: false
 
   /mdast-util-definitions@5.1.2:
     resolution: {integrity: sha512-8SVPMuHqlPME/z3gqVwWY4zVXn8lqKv/pAhC57FuJ40ImXyBpmO5ukh98zB2v7Blql2FiHjHv9LVztSIqjY+MA==}
