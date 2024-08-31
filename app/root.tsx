@@ -42,7 +42,7 @@ function App() {
         <Meta />
         <Links />
       </head>
-      <body className="px-5 max-w-[1200px] w-full mx-auto mt-10 bg-foreground">
+      <body>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
