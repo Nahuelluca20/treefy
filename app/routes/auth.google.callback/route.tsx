@@ -19,7 +19,6 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 
     throw redirect("/", { headers });
   } catch (error) {
-    console.log("error aqui 1");
     console.error(error);
     throw error;
   }

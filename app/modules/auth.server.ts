@@ -4,7 +4,7 @@ import { createCookieSessionStorage } from "@remix-run/cloudflare";
 import { Authenticator } from "remix-auth";
 import { GoogleStrategy } from "remix-auth-google";
 import { User } from "./session.server";
-import { db } from "~/database";
+import { db } from "~/database/database.server";
 import { generateUUID } from "utils/uuid";
 
 export class Auth {
