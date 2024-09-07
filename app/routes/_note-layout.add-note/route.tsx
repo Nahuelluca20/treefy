@@ -13,13 +13,13 @@ import { plugins } from "~/components/editor/plugins";
 import { TOOLS } from "~/components/editor/tools";
 import { markdown } from "@yoopta/exports";
 import { getFirstHeader } from "utils/strings";
-import { SessionStorage } from "~/modules/session.server";
+import { requireUser } from "~/modules/session.server";
 import { createNote, getNotesForBeParents } from "~/models/note.server";
 import NoteToolbar from "~/components/editor/tool-bar";
 import { ParentNotes } from "~/types/notes";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user = await SessionStorage.requireUser(context, request);
+  const user = await requireUser(context, request);
   if (!user?.id) throw Error("user id not found");
 
   const parentNotes = await getNotesForBeParents(
@@ -31,7 +31,7 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 }
 
 export async function action({ context, request }: ActionFunctionArgs) {
-  const user = await SessionStorage.requireUser(context, request);
+  const user = await requireUser(context, request);
   if (!user?.id) throw Error("User ID not exist");
   const formData = await request.formData();
   const intent = formData.get("intent");

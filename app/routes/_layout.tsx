@@ -1,11 +1,12 @@
 import { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import SideBar from "~/components/navigation/side-bar";
-import { SessionStorage } from "~/modules/session.server";
+// import SideBar from "~/components/navigation/side-bar";
+import { requireUser } from "~/modules/session.server";
 import { UserSession } from "~/types/user";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user: UserSession = await SessionStorage.requireUser(context, request);
+  const user: UserSession = await requireUser(context, request);
 
   return user;
 }

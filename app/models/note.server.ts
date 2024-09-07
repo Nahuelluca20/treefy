@@ -63,3 +63,15 @@ export async function getNotesForBeParents(userId: string, d1: D1Database) {
 
   return noteList;
 }
+
+export async function getRelatedNotes(noteId: string, d1: D1Database) {
+  const noteList = db(d1)
+    .selectFrom("notes")
+    .select(["id", "title"])
+    .where("parent_id", "=", noteId)
+    .limit(50)
+    .offset(0)
+    .execute();
+
+  return noteList;
+}

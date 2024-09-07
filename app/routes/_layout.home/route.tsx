@@ -3,10 +3,10 @@ import { useLoaderData } from "@remix-run/react";
 import NotesList from "~/components/notes-list";
 import { LinkButton } from "~/components/ui/LinkButton";
 import { notesList } from "~/models/note.server";
-import { SessionStorage } from "~/modules/session.server";
+import { requireUser } from "~/modules/session.server";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user = await SessionStorage.requireUser(context, request);
+  const user = await requireUser(context, request);
   if (!user?.id) throw Error("user id not found");
 
   const list = await notesList(user.id, context.cloudflare.env.DB);
