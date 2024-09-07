@@ -4,5 +4,6 @@ export interface NoteTable {
   title?: string;
   content: string;
   date: string;
+  public_note?: boolean;
   author_id: string;
 }

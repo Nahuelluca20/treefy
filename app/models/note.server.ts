@@ -5,6 +5,7 @@ interface CreateNote {
   content: string;
   title: string;
   userId: string;
+  public_note?: boolean;
   parent_id: string;
 }
 
@@ -16,6 +17,7 @@ export async function createNote(noteData: CreateNote, d1: D1Database) {
       title: noteData.title,
       parent_id: noteData.parent_id,
       content: noteData.content,
+      public_note: noteData.public_note,
       date: String(Date.now()),
       author_id: noteData.userId,
     })
@@ -49,4 +51,15 @@ export async function getNoteById(noteId: string, d1: D1Database) {
   if (note) return note;
 
   return null;
+}
+
+export async function getNotesForBeParents(userId: string, d1: D1Database) {
+  const noteList = await db(d1)
+    .selectFrom("users")
+    .leftJoin("notes", "users.id", "notes.author_id")
+    .select(["notes.id", "notes.title"])
+    .where("notes.author_id", "=", userId)
+    .execute();
+
+  return noteList;
 }
