@@ -1,10 +1,10 @@
 import { json, LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { Form } from "@remix-run/react";
 import { Button } from "~/components/ui/Button";
-import { SessionStorage } from "~/modules/session.server";
+import { readUser } from "~/modules/session.server";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user = await SessionStorage.readUser(context, request);
+  const user = await readUser(context, request);
   if (!user) return json(null);
 
   throw redirect("/home");

@@ -2,11 +2,12 @@ import { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
 import { PenLine, BookOpen, Share2, Menu, PlayCircle } from "lucide-react";
 import { useState } from "react";
+import { Button } from "~/components/ui/Button";
 import { LinkButton } from "~/components/ui/LinkButton";
-import { SessionStorage } from "~/modules/session.server";
+import { readUser } from "~/modules/session.server";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user = await SessionStorage.readUser(context, request);
+  const user = await readUser(context, request);
   if (user) return true;
 
   return false;
@@ -75,9 +76,9 @@ export default function LandingPage() {
                     placeholder="Enter your email"
                     type="email"
                   />
-                  <button className="bg-blue-596 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full sm:w-[200px]">
+                  <Button className="bg-blue-600 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full sm:w-[200px]">
                     Get Started
-                  </button>
+                  </Button>
                 </form>
                 <p className="text-xs text-gray-496">
                   14-day free trial. No credit card required.
