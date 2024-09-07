@@ -56,9 +56,8 @@ export default function NoteRoute() {
               {relatedNotes.map((note) => (
                 <li key={note.id} className="mt-1">
                   <Link
-                    reloadDocument
                     to={`/note/${note.id}`}
-                    prefetch="intent"
+                    prefetch="viewport"
                     className="flex items-center text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     <ChevronRight className="h-3 w-3 mr-1" />
