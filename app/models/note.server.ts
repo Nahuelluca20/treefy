@@ -32,7 +32,7 @@ export async function createNote(noteData: CreateNote, d1: D1Database) {
 }
 
 export async function notesList(userId: string, d1: D1Database) {
-  const noteList = await db(d1)
+  const noteList = db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title", "notes.parent_id"])
@@ -45,7 +45,7 @@ export async function notesList(userId: string, d1: D1Database) {
 export async function getNoteById(noteId: string, d1: D1Database) {
   const note = db(d1)
     .selectFrom("notes")
-    .select("content")
+    .select(["content", "author_id"])
     .where("id", "=", noteId)
     .executeTakeFirst();
   if (note) return note;
@@ -54,7 +54,7 @@ export async function getNoteById(noteId: string, d1: D1Database) {
 }
 
 export async function getNotesForBeParents(userId: string, d1: D1Database) {
-  const noteList = await db(d1)
+  const noteList = db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title"])
@@ -74,4 +74,12 @@ export async function getRelatedNotes(noteId: string, d1: D1Database) {
     .execute();
 
   return noteList;
+}
+
+export async function deleteNote(noteId: string, d1: D1Database) {
+  const deletedNote = await db(d1)
+    .deleteFrom("notes")
+    .where("notes.id", "=", noteId)
+    .executeTakeFirst();
+  return deletedNote.numDeletedRows;
 }
