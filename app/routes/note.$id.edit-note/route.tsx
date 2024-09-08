@@ -68,7 +68,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
         String(params.id),
         context.cloudflare.env.DB
       );
-      throw redirect(`/note/${updatedNote}`);
+      throw redirect("/home");
     }
 
     case "delete": {

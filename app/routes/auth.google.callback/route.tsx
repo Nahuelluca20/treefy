@@ -19,7 +19,7 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
     headers.append("set-cookie", await sessionStorage.commitSession(session));
     headers.append("set-cookie", await auth.clear(request));
 
-    throw redirect("/", { headers });
+    throw redirect("/home", { headers });
   } catch (error) {
     console.error(error);
     throw error;
