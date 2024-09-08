@@ -5,18 +5,18 @@ import {
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
-import YooptaEditor, { createYooptaEditor } from "@yoopta/editor";
-import { useMemo, useRef, useState } from "react";
+import YooptaEditor from "@yoopta/editor";
 import { INITIAL_VALUE } from "~/components/editor/initValue";
 import { MARKS } from "~/components/editor/marks";
 import { plugins } from "~/components/editor/plugins";
 import { TOOLS } from "~/components/editor/tools";
 import { markdown } from "@yoopta/exports";
-import { getFirstHeader } from "utils/strings";
 import { requireUser } from "~/modules/session.server";
 import { createNote, getNotesForBeParents } from "~/models/note.server";
 import NoteToolbar from "~/components/editor/tool-bar";
 import { ParentNotes } from "~/types/notes";
+import { prepareEditorSubmit } from "utils/submit-note";
+import { useNoteEditor } from "~/helpers/use-note-editor.hook";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const user = await requireUser(context, request);
@@ -51,51 +51,43 @@ export async function action({ context, request }: ActionFunctionArgs) {
     }
 
     case "delete": {
-      console.log("delete");
-      return { success: true, message: "Nota edit" };
+      throw redirect("/home");
     }
 
     default:
-      throw new Error("Acción no reconocida");
+      throw new Response("Error", { status: 400 });
   }
 }
 
 export default function AddNote() {
   const parentNotes: ParentNotes = useLoaderData();
-  const [isPublic, setIsPublic] = useState(false);
-  const [parentId, setParentId] = useState<string | null>(null);
-
-  const editor = useMemo(() => createYooptaEditor(), []);
-  const editorInputRef = useRef<HTMLInputElement>(null);
-  const titleEditorInputRef = useRef<HTMLInputElement>(null);
-  const isPublicInputRef = useRef<HTMLInputElement>(null);
-  const parentIdInputRef = useRef<HTMLInputElement>(null);
-
-  const handleBeforeSubmit = () => {
-    const editorContent = editor.getEditorValue();
-
-    const title = getFirstHeader(editorContent);
-    if (titleEditorInputRef.current) {
-      titleEditorInputRef.current.value = title ?? "Title";
-    }
-
-    // Convert the editor content to a JSON string
-    const jsonString = JSON.stringify(editorContent);
-    if (editorInputRef.current) {
-      editorInputRef.current.value = jsonString;
-    }
-
-    if (isPublicInputRef.current) {
-      isPublicInputRef.current.value = isPublic.toString();
-    }
-
-    if (parentIdInputRef.current) {
-      parentIdInputRef.current.value = parentId ?? "";
-    }
-  };
+  const {
+    isPublic,
+    setIsPublic,
+    parentId,
+    setParentId,
+    editor,
+    editorInputRef,
+    titleEditorInputRef,
+    isPublicInputRef,
+    parentIdInputRef,
+  } = useNoteEditor();
 
   return (
-    <Form method="post" onSubmit={handleBeforeSubmit}>
+    <Form
+      method="post"
+      onSubmit={() => {
+        prepareEditorSubmit(
+          editor,
+          titleEditorInputRef,
+          editorInputRef,
+          isPublicInputRef,
+          parentIdInputRef,
+          isPublic,
+          parentId
+        );
+      }}
+    >
       <NoteToolbar
         isPublic={isPublic}
         handleTogglePublic={setIsPublic}
