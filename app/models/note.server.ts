@@ -30,9 +30,8 @@ export async function createNote(noteData: CreateNote, d1: D1Database) {
 
   return note?.id;
 }
-
 export async function notesList(userId: string, d1: D1Database) {
-  const noteList = await db(d1)
+  const noteList = db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title", "notes.parent_id"])
@@ -45,7 +44,18 @@ export async function notesList(userId: string, d1: D1Database) {
 export async function getNoteById(noteId: string, d1: D1Database) {
   const note = db(d1)
     .selectFrom("notes")
-    .select("content")
+    .select(["content", "author_id"])
+    .where("id", "=", noteId)
+    .executeTakeFirst();
+  if (note) return note;
+
+  return null;
+}
+
+export async function getAllNoteById(noteId: string, d1: D1Database) {
+  const note = db(d1)
+    .selectFrom("notes")
+    .select(["content", "author_id", "title", "parent_id", "public_note"])
     .where("id", "=", noteId)
     .executeTakeFirst();
   if (note) return note;
@@ -54,7 +64,7 @@ export async function getNoteById(noteId: string, d1: D1Database) {
 }
 
 export async function getNotesForBeParents(userId: string, d1: D1Database) {
-  const noteList = await db(d1)
+  const noteList = db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title"])
@@ -74,4 +84,43 @@ export async function getRelatedNotes(noteId: string, d1: D1Database) {
     .execute();
 
   return noteList;
+}
+
+export async function deleteNote(noteId: string, d1: D1Database) {
+  const deletedNote = await db(d1)
+    .deleteFrom("notes")
+    .where("notes.id", "=", noteId)
+    .executeTakeFirst();
+  return deletedNote.numDeletedRows;
+}
+
+export interface UpdateNote {
+  content?: string;
+  title?: string;
+  public_note?: boolean;
+  parent_id?: string;
+}
+
+export async function updateNote(
+  noteData: UpdateNote,
+  noteId: string,
+  d1: D1Database
+) {
+  try {
+    const updatedNote = await db(d1)
+      .updateTable("notes")
+      .set(noteData)
+      .where("id", "=", noteId)
+      .returning(["id"])
+      .executeTakeFirst();
+
+    if (!updatedNote?.id) {
+      throw new Error("No note found to update");
+    }
+
+    return updatedNote.id;
+  } catch (error) {
+    console.error("Error updating note:", error);
+    throw new Error("Could not update note");
+  }
 }

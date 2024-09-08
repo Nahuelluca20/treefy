@@ -17,6 +17,7 @@ const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
     .map((note) => (
       <li key={note.id} className="mt-1">
         <Link
+          prefetch="intent"
           to={`/note/${note.id}`}
           className="flex items-center text-blue-400 hover:text-blue-300 transition-colors"
         >
