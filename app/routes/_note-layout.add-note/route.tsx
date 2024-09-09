@@ -42,11 +42,10 @@ export async function action({ context, request }: ActionFunctionArgs) {
         content: String(formData.get("editor")),
         title: String(formData.get("title")),
         userId: user?.id,
-        public_note: Boolean(formData.get("isPublic")),
+        public_note: formData.get("isPublic") === "true" ? true : false,
         parent_id: String(formData.get("parentId")),
       };
       await createNote(noteData, context.cloudflare.env.DB);
-
       throw redirect("/home");
     }
 

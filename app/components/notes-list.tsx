@@ -9,6 +9,7 @@ type Note = {
 
 type NotesListProps = {
   notes: Note[];
+  title: string;
 };
 
 const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
@@ -31,11 +32,11 @@ const renderNotes = (notes: Note[], parentId: string | null): JSX.Element[] => {
     ));
 };
 
-export default function NotesList({ notes }: NotesListProps) {
+export default function NotesList({ notes, title }: NotesListProps) {
   return (
     <div className="p-6 rounded-lg">
       <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4">
-        Topics - Entry points for Exploration
+        {title}
       </h1>
       <ul className="space-y-2">{renderNotes(notes, null)}</ul>
     </div>

@@ -59,15 +59,11 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
       const noteData = {
         content: String(formData.get("editor")),
         title: String(formData.get("title")),
-        public_note: Boolean(formData.get("isPublic")),
+        public_note: formData.get("isPublic") === "true" ? true : false,
         parent_id: String(formData.get("parentId")),
       };
 
-      const updatedNote = await updateNote(
-        noteData,
-        String(params.id),
-        context.cloudflare.env.DB
-      );
+      await updateNote(noteData, String(params.id), context.cloudflare.env.DB);
       throw redirect("/home");
     }
 
