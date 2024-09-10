@@ -13,28 +13,31 @@ import { plugins } from "~/components/editor/plugins";
 import { TOOLS } from "~/components/editor/tools";
 import { deleteNote, getNoteById, getRelatedNotes } from "~/models/note.server";
 import NoteNotFound from "./post-not-found";
-import { requireUser } from "~/modules/session.server";
+import { readUser, requireUser } from "~/modules/session.server";
 import SimpleNoteToolbar from "~/components/editor/simple-toolbar";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
-  const user = await requireUser(context, request);
+  const user = await readUser(context, request);
 
   const note = await getNoteById(String(params.id), context.cloudflare.env.DB);
   const relatedNotes = await getRelatedNotes(
     String(params.id),
     context.cloudflare.env.DB
   );
-  if (note?.content) {
-    return json({
-      note: JSON.parse(note.content),
-      author: note.author_id,
-      user: user,
-      relatedNotes: relatedNotes,
-    });
+
+  if (!!note?.public_note || note?.author_id === user?.id) {
+    if (note?.content) {
+      return json({
+        note: JSON.parse(note.content),
+        author: note.author_id,
+        user: user,
+        relatedNotes: relatedNotes,
+      });
+    }
   }
 
   throw new Response("Oh no! Something went wrong!", {
-    status: 500,
+    status: 403,
   });
 }
 
@@ -59,7 +62,7 @@ export default function NoteRoute() {
 
   return (
     <>
-      {user.id === author && (
+      {user?.id === author && (
         <Form method="delete">
           <SimpleNoteToolbar />
         </Form>

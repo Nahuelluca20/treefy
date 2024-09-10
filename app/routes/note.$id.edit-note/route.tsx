@@ -82,7 +82,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 }
 
 export default function EditNote() {
-  const { content, parentNotes } = useLoaderData<typeof loader>();
+  const { content, parentNotes, noteData } = useLoaderData<typeof loader>();
   const {
     isPublic,
     setIsPublic,
@@ -93,7 +93,7 @@ export default function EditNote() {
     titleEditorInputRef,
     isPublicInputRef,
     parentIdInputRef,
-  } = useNoteEditor();
+  } = useNoteEditor(noteData.public_note ?? false, noteData.parent_id ?? "");
 
   return (
     <div className="w-full max-w-[750px] mx-auto mt-10 px-5 md:px-0">

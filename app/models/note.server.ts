@@ -44,7 +44,7 @@ export async function notesList(userId: string, d1: D1Database) {
 export async function getNoteById(noteId: string, d1: D1Database) {
   const note = db(d1)
     .selectFrom("notes")
-    .select(["content", "author_id"])
+    .select(["content", "author_id", "public_note"])
     .where("id", "=", noteId)
     .executeTakeFirst();
   if (note) return note;

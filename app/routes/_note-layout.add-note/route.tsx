@@ -70,7 +70,7 @@ export default function AddNote() {
     titleEditorInputRef,
     isPublicInputRef,
     parentIdInputRef,
-  } = useNoteEditor();
+  } = useNoteEditor(false, "");
 
   return (
     <Form
