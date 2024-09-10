@@ -37,7 +37,10 @@ export default function Home() {
       <section className="mt-5">
         <h2 className="text-2xl font-semibold">Notes</h2>
         <hr className="border dark:border-gray-600 border-gray-300" />
-        <NotesList notes={notes} />
+        <NotesList
+          notes={notes}
+          title="Topics - Entry points for Exploration"
+        />
       </section>
     </>
   );

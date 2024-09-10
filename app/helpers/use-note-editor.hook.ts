@@ -1,9 +1,9 @@
 import { useMemo, useRef, useState } from "react";
 import { createYooptaEditor } from "@yoopta/editor";
 
-export function useNoteEditor() {
-  const [isPublic, setIsPublic] = useState(false);
-  const [parentId, setParentId] = useState<string | null>(null);
+export function useNoteEditor(isPublicProp: boolean, parentIdProp: string) {
+  const [isPublic, setIsPublic] = useState(isPublicProp);
+  const [parentId, setParentId] = useState<string | null>(parentIdProp);
 
   const editor = useMemo(() => createYooptaEditor(), []);
   const editorInputRef = useRef<HTMLInputElement>(null);

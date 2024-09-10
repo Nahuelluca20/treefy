@@ -44,7 +44,7 @@ export async function notesList(userId: string, d1: D1Database) {
 export async function getNoteById(noteId: string, d1: D1Database) {
   const note = db(d1)
     .selectFrom("notes")
-    .select(["content", "author_id"])
+    .select(["content", "author_id", "public_note"])
     .where("id", "=", noteId)
     .executeTakeFirst();
   if (note) return note;
@@ -123,4 +123,25 @@ export async function updateNote(
     console.error("Error updating note:", error);
     throw new Error("Could not update note");
   }
+}
+
+export async function getPublicNotesByUserId(userId: string, d1: D1Database) {
+  const publicNotes = await db(d1)
+    .selectFrom("notes")
+    .select(["id", "title", "parent_id", "public_note"])
+    .where("author_id", "=", userId)
+    .where("public_note", "=", true)
+    .execute();
+
+  return publicNotes;
+}
+
+export async function getUsernameById(userId: string, d1: D1Database) {
+  const user = await db(d1)
+    .selectFrom("users")
+    .select("name")
+    .where("id", "=", userId)
+    .executeTakeFirst();
+
+  return user?.name ?? "User Unkwon";
 }

@@ -59,15 +59,11 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
       const noteData = {
         content: String(formData.get("editor")),
         title: String(formData.get("title")),
-        public_note: Boolean(formData.get("isPublic")),
+        public_note: formData.get("isPublic") === "true" ? true : false,
         parent_id: String(formData.get("parentId")),
       };
 
-      const updatedNote = await updateNote(
-        noteData,
-        String(params.id),
-        context.cloudflare.env.DB
-      );
+      await updateNote(noteData, String(params.id), context.cloudflare.env.DB);
       throw redirect("/home");
     }
 
@@ -86,7 +82,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 }
 
 export default function EditNote() {
-  const { content, parentNotes } = useLoaderData<typeof loader>();
+  const { content, parentNotes, noteData } = useLoaderData<typeof loader>();
   const {
     isPublic,
     setIsPublic,
@@ -97,7 +93,7 @@ export default function EditNote() {
     titleEditorInputRef,
     isPublicInputRef,
     parentIdInputRef,
-  } = useNoteEditor();
+  } = useNoteEditor(noteData.public_note ?? false, noteData.parent_id ?? "");
 
   return (
     <div className="w-full max-w-[750px] mx-auto mt-10 px-5 md:px-0">
