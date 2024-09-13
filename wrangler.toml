@@ -1,0 +1,13 @@
+name = "treefy"
+compatibility_date = "2024-08-21"
+
+kv_namespaces = [
+  { binding = "treefy_kv_auth", id = "2ffee683ab4e449e9af8c7b8cec6e6f7", preview_id = "2ffee683ab4e449e9af8c7b8cec6e6f7" },
+]
+
+
+[[d1_databases]]
+binding = "DB"
+preview_database_id = "bfdddaf0-00f7-42db-9b36-800284c3bf09"
+database_name = "treefy-db"
+database_id = "bfdddaf0-00f7-42db-9b36-800284c3bf09"
