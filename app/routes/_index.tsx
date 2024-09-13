@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
 import { PenLine, BookOpen, Share2, Menu, PlayCircle } from "lucide-react";
 import { useState } from "react";
@@ -13,6 +13,13 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
   return false;
 }
 
+export const meta: MetaFunction = () => [
+  { title: `Treefy` },
+  {
+    name: "description",
+    content: `Clarity in Your Thoughts, Clarity in Your Notes`,
+  },
+];
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useLoaderData<typeof loader>();
