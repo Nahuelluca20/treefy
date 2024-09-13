@@ -2,9 +2,11 @@ import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { getPublicNotesByUserId, getUsernameById } from "~/models/note.server";
 import NotesList from "~/components/notes-list";
+import { assertUUID } from "utils/uuid";
 
 export async function loader({ params, context }: LoaderFunctionArgs) {
   const userId = params.userid;
+  assertUUID(userId);
   if (!userId) {
     throw new Response("User ID not found", { status: 404 });
   }
@@ -35,7 +37,7 @@ export default function PublicNotesList() {
 
   return (
     <div>
-      <NotesList notes={notes} title={`Notas públicas de ${username}`} />
+      <NotesList notes={notes} title={`Public notes of ${username}`} />
     </div>
   );
 }

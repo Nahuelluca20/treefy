@@ -58,6 +58,14 @@ export async function action({ context, request }: ActionFunctionArgs) {
   }
 }
 
+export const meta = () => [
+  { title: "Create new note" },
+  {
+    name: "description",
+    content: `Create a new note and share it with your friends`,
+  },
+];
+
 export default function AddNote() {
   const parentNotes: ParentNotes = useLoaderData();
   const {

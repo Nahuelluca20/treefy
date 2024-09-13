@@ -2,6 +2,7 @@ import {
   ActionFunctionArgs,
   json,
   LoaderFunctionArgs,
+  MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";
@@ -15,23 +16,31 @@ import { deleteNote, getNoteById, getRelatedNotes } from "~/models/note.server";
 import NoteNotFound from "./post-not-found";
 import { readUser, requireUser } from "~/modules/session.server";
 import SimpleNoteToolbar from "~/components/editor/simple-toolbar";
+import { assertUUID } from "utils/uuid";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
   const user = await readUser(context, request);
+  const noteId = String(params.id);
+  assertUUID(noteId);
 
-  const note = await getNoteById(String(params.id), context.cloudflare.env.DB);
-  const relatedNotes = await getRelatedNotes(
-    String(params.id),
-    context.cloudflare.env.DB
-  );
+  const note = await getNoteById(noteId, context.cloudflare.env.DB);
+  const relatedNotes = await getRelatedNotes(noteId, context.cloudflare.env.DB);
 
   if (!!note?.public_note || note?.author_id === user?.id) {
     if (note?.content) {
+      const meta = [
+        { title: `${note.title ?? ""}` },
+        {
+          name: "description",
+          content: `${note.title} written by ${user?.id ?? ""}`,
+        },
+      ];
       return json({
         note: JSON.parse(note.content),
         author: note.author_id,
         user: user,
         relatedNotes: relatedNotes,
+        meta,
       });
     }
   }
@@ -40,6 +49,8 @@ export async function loader({ context, request, params }: LoaderFunctionArgs) {
     status: 403,
   });
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => data?.meta ?? [];
 
 export async function action({ context, request, params }: ActionFunctionArgs) {
   await requireUser(context, request);

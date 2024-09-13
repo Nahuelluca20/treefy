@@ -2,6 +2,7 @@ import {
   ActionFunctionArgs,
   json,
   LoaderFunctionArgs,
+  MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -45,8 +46,18 @@ export async function loader({ context, request, params }: LoaderFunctionArgs) {
     context.cloudflare.env.DB
   )) as ParentNotes;
 
-  return json({ content, noteData, parentNotes });
+  const meta = [
+    { title: `Edit note | ${note.title ?? ""}` },
+    {
+      name: "description",
+      content: `Edit the note ${note.title}`,
+    },
+  ];
+
+  return json({ content, noteData, parentNotes, meta });
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => data?.meta ?? [];
 
 export async function action({ context, request, params }: ActionFunctionArgs) {
   const user = await requireUser(context, request);

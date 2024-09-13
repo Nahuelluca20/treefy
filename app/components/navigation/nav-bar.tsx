@@ -1,16 +1,20 @@
+import { useRouteLoaderData } from "@remix-run/react";
 import ModeToggle from "../buttons/mode-toggle";
-// import { SearchField } from "../ui/SearchField";
+import { LinkButton } from "../ui/LinkButton";
+import { UserSession } from "~/types/user";
 
-interface ISideBar {
-  userName: string | null;
-}
-
-export default function SideBar({ userName }: ISideBar) {
+export default function Navbar() {
+  const user: UserSession = useRouteLoaderData("routes/_layout");
   return (
     <aside className="mb-12 md:mb-20 w-full md:max-w-[750px] mx-auto flex flex-col gap-4 items-start ">
       <div className="w-full flex gap-4 justify-between md:items-start">
-        <h2 className="text-2xl font-semibold">{userName ?? "User"}</h2>
-        <ModeToggle />
+        <h2 className="text-2xl font-semibold">{user?.name ?? "User"}</h2>
+        <div className="flex items-center gap-3">
+          <LinkButton variant="icon" to={`${user?.id}/notes`}>
+            Public Notes
+          </LinkButton>
+          <ModeToggle />
+        </div>
       </div>
       {/* <SearchField
         label="Search"

@@ -1,22 +1,32 @@
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { json, LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import NotesList from "~/components/notes-list";
 import { LinkButton } from "~/components/ui/LinkButton";
 import { notesList } from "~/models/note.server";
 import { requireUser } from "~/modules/session.server";
+import { UserSession } from "~/types/user";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
-  const user = await requireUser(context, request);
+  const user: UserSession = await requireUser(context, request);
   if (!user?.id) throw Error("user id not found");
 
   const list = await notesList(user.id, context.cloudflare.env.DB);
+  const meta = [
+    { title: `${user.name} | Notes` },
+    {
+      name: "description",
+      content: `All notes written by ${user.id}`,
+    },
+  ];
 
-  return list;
+  return json({ list, meta });
 }
 
+export const meta: MetaFunction<typeof loader> = ({ data }) => data?.meta ?? [];
+
 export default function Home() {
-  const data = useLoaderData<typeof loader>();
-  const notes = data.map((item) => ({
+  const { list } = useLoaderData<typeof loader>();
+  const notes = list.map((item) => ({
     id: item.id ?? "",
     title: item.title ?? "",
     parent_id: item.parent_id === "" ? null : item.parent_id,
