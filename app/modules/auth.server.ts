@@ -43,7 +43,7 @@ const createGoogleStrategy = (config: AuthConfig, context: AppLoadContext) => {
       clientSecret: config.GOOGLE_CLIENT_SECRET,
       callbackURL:
         config.ENVIROMENT === "PROD"
-          ? "https://linkin-remix.pages.dev/auth/google/callback"
+          ? "https://treefy.pages.dev/auth/google/callback"
           : "http://localhost:5173/auth/google/callback",
     },
     async ({ profile }): Promise<User> => {
