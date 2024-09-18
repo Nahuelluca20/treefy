@@ -9,10 +9,12 @@ import { type PlatformProxy } from "wrangler";
 interface Env {
   DB: D1Database;
   treefy_kv_auth: KVNamespace;
+  rate_limiter: KVNamespace;
   COOKIE_SESSION_SECRET: string;
   ENVIROMENT: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
+  RATE_LIMITER: string;
 }
 
 type Cloudflare = Omit<PlatformProxy<Env>, "dispose">;

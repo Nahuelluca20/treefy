@@ -13,6 +13,7 @@
     "typegen": "wrangler types"
   },
   "dependencies": {
+    "@edgefirst-dev/worker-kv-rate-limit": "^1.0.0",
     "@remix-run/cloudflare": "^2.11.2",
     "@remix-run/cloudflare-pages": "^2.11.2",
     "@remix-run/react": "^2.11.2",

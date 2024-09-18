@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@edgefirst-dev/worker-kv-rate-limit':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@remix-run/cloudflare':
     specifier: ^2.11.2
     version: 2.11.2(@cloudflare/workers-types@4.20240815.0)(typescript@5.5.4)
@@ -582,6 +585,10 @@ packages:
   /@cloudflare/workers-types@4.20240815.0:
     resolution: {integrity: sha512-H/IXCOahT1lr4RKzsiCkyjM7+LCPLtl2wjxyLG8xMTNERR0XuD1Vcfns6TraE0cd5+IcKe7j3rpzBlSCjZ+61A==}
 
+  /@cloudflare/workers-types@4.20240909.0:
+    resolution: {integrity: sha512-4knwtX6efxIsIxawdmPyynU9+S8A78wntU8eUIEldStWP4gNgxGkeWcfCMXulTx8oxr3DU4aevHyld9HGV8VKQ==}
+    dev: false
+
   /@codemirror/autocomplete@6.18.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)(@lezer/common@1.2.1):
     resolution: {integrity: sha512-5DbOvBbY4qW5l57cjDsmmpDh3/TeK1vXfTHa+BUMrRzdWdcxKZ4U4V7vQaTtOpApNU4kLS4FQ6cINtLg245LXA==}
     peerDependencies:
@@ -860,6 +867,13 @@ packages:
     dependencies:
       react: 18.3.1
       tslib: 2.6.3
+    dev: false
+
+  /@edgefirst-dev/worker-kv-rate-limit@1.0.0:
+    resolution: {integrity: sha512-YV3HMDmyzP/oBfTmqdlZoKebIlgk50pXakYyK0rdp8D9bxoGD9P5fM8fgJS1W2AWPYTmmskJhNn+ppah1vmjiA==}
+    engines: {node: '>=20.0.0'}
+    dependencies:
+      '@cloudflare/workers-types': 4.20240909.0
     dev: false
 
   /@emotion/hash@0.9.2:

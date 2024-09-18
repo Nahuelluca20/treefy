@@ -22,8 +22,13 @@ import { useNoteEditor } from "~/helpers/use-note-editor.hook";
 import { ParentNotes } from "~/types/notes";
 import { prepareEditorSubmit } from "utils/submit-note";
 import { markdown } from "@yoopta/exports";
+import { checkRateLimit } from "~/utils/check-rate-limit";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
+  const { pathname } = new URL(request.url);
+  const KV = context.cloudflare.env.rate_limiter;
+  await checkRateLimit(KV, pathname);
+
   const user = await requireUser(context, request);
   if (!user?.id) throw Error("user id not found");
 

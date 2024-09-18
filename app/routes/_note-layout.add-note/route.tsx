@@ -17,6 +17,7 @@ import NoteToolbar from "~/components/editor/tool-bar";
 import { ParentNotes } from "~/types/notes";
 import { prepareEditorSubmit } from "utils/submit-note";
 import { useNoteEditor } from "~/helpers/use-note-editor.hook";
+import { checkRateLimit } from "~/utils/check-rate-limit";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const user = await requireUser(context, request);
@@ -31,6 +32,10 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 }
 
 export async function action({ context, request }: ActionFunctionArgs) {
+  const { pathname } = new URL(request.url);
+  const KV = context.cloudflare.env.rate_limiter;
+  await checkRateLimit(KV, pathname);
+
   const user = await requireUser(context, request);
   if (!user?.id) throw Error("User ID not exist");
   const formData = await request.formData();

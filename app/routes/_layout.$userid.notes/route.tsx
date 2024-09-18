@@ -3,8 +3,13 @@ import { useLoaderData } from "@remix-run/react";
 import { getPublicNotesByUserId, getUsernameById } from "~/models/note.server";
 import NotesList from "~/components/notes-list";
 import { assertUUID } from "utils/uuid";
+import { checkRateLimit } from "~/utils/check-rate-limit";
 
-export async function loader({ params, context }: LoaderFunctionArgs) {
+export async function loader({ params, context, request }: LoaderFunctionArgs) {
+  const { pathname } = new URL(request.url);
+  const KV = context.cloudflare.env.rate_limiter;
+  await checkRateLimit(KV, pathname);
+
   const userId = params.userid;
   assertUUID(userId);
   if (!userId) {
