@@ -5,8 +5,13 @@ import { LinkButton } from "~/components/ui/LinkButton";
 import { notesList } from "~/models/note.server";
 import { requireUser } from "~/modules/session.server";
 import { UserSession } from "~/types/user";
+import { checkRateLimit } from "~/utils/check-rate-limit";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
+  const { pathname } = new URL(request.url);
+  const KV = context.cloudflare.env.rate_limiter;
+  await checkRateLimit(KV, pathname);
+
   const user: UserSession = await requireUser(context, request);
   if (!user?.id) throw Error("user id not found");
 

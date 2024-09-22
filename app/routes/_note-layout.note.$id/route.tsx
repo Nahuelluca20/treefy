@@ -17,8 +17,13 @@ import NoteNotFound from "./post-not-found";
 import { readUser, requireUser } from "~/modules/session.server";
 import SimpleNoteToolbar from "~/components/editor/simple-toolbar";
 import { assertUUID } from "utils/uuid";
+import { checkRateLimit } from "~/utils/check-rate-limit";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
+  const { pathname } = new URL(request.url);
+  const KV = context.cloudflare.env.rate_limiter;
+  await checkRateLimit(KV, pathname);
+
   const user = await readUser(context, request);
   const noteId = String(params.id);
   assertUUID(noteId);

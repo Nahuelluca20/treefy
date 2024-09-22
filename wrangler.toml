@@ -3,6 +3,7 @@ compatibility_date = "2024-08-21"
 
 kv_namespaces = [
   { binding = "treefy_kv_auth", id = "2ffee683ab4e449e9af8c7b8cec6e6f7", preview_id = "2ffee683ab4e449e9af8c7b8cec6e6f7" },
+  { binding = "rate_limiter", id = "e4ee91d114584fa6a31066b709fbd34e", preview_id = "e4ee91d114584fa6a31066b709fbd34e" },
 ]
 
 
