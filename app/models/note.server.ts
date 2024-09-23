@@ -33,7 +33,7 @@ export async function createNote(noteData: CreateNote, d1: D1Database) {
 export async function notesList(userId: string, d1: D1Database) {
   const start = Date.now();
 
-  const noteList = db(d1)
+  const noteList = await db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title", "notes.parent_id"])
@@ -41,7 +41,7 @@ export async function notesList(userId: string, d1: D1Database) {
     .execute();
 
   const duration = Date.now() - start;
-  console.log(`getNoteById query took ${duration}ms`);
+  console.log(`notesList query took ${duration}ms`);
 
   return noteList;
 }
@@ -49,7 +49,7 @@ export async function notesList(userId: string, d1: D1Database) {
 export async function getNoteById(noteId: string, d1: D1Database) {
   const start = Date.now();
 
-  const note = db(d1)
+  const note = await db(d1)
     .selectFrom("notes")
     .select(["content", "author_id", "public_note", "title"])
     .where("id", "=", noteId)
