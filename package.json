@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@edgefirst-dev/worker-kv-rate-limit": "^1.0.0",
-    "@remix-run/cloudflare": "^2.11.2",
-    "@remix-run/cloudflare-pages": "^2.11.2",
-    "@remix-run/react": "^2.11.2",
+    "@remix-run/cloudflare": "^2.9.2",
+    "@remix-run/cloudflare-pages": "^2.9.2",
+    "@remix-run/react": "^2.9.2",
     "@tailwindcss/typography": "^0.5.15",
     "@yoopta/accordion": "^4.7.0",
     "@yoopta/action-menu-list": "^4.7.0",
@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
-    "@remix-run/dev": "^2.11.2",
+    "@remix-run/dev": "^2.9.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",

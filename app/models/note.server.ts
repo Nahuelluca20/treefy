@@ -64,7 +64,7 @@ export async function getNoteById(noteId: string, d1: D1Database) {
 }
 
 export async function getAllNoteById(noteId: string, d1: D1Database) {
-  const note = db(d1)
+  const note = await db(d1)
     .selectFrom("notes")
     .select(["content", "author_id", "title", "parent_id", "public_note"])
     .where("id", "=", noteId)
@@ -75,7 +75,7 @@ export async function getAllNoteById(noteId: string, d1: D1Database) {
 }
 
 export async function getNotesForBeParents(userId: string, d1: D1Database) {
-  const noteList = db(d1)
+  const noteList = await db(d1)
     .selectFrom("users")
     .leftJoin("notes", "users.id", "notes.author_id")
     .select(["notes.id", "notes.title"])
@@ -86,7 +86,7 @@ export async function getNotesForBeParents(userId: string, d1: D1Database) {
 }
 
 export async function getRelatedNotes(noteId: string, d1: D1Database) {
-  const noteList = db(d1)
+  const noteList = await db(d1)
     .selectFrom("notes")
     .select(["id", "title"])
     .where("parent_id", "=", noteId)
