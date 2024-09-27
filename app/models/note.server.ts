@@ -1,5 +1,8 @@
-import { generateUUID } from "utils/uuid";
+import { eq, and } from "drizzle-orm";
 import { db } from "~/database/database.server";
+import { generateUUID } from "utils/uuid";
+import { notes } from "~/database/schemas/notes";
+import { users } from "~/database/schemas/user";
 
 interface CreateNote {
   content: string;
@@ -9,9 +12,9 @@ interface CreateNote {
   parent_id: string;
 }
 
-export async function createNote(noteData: CreateNote, d1: D1Database) {
-  const note = await db(d1)
-    .insertInto("notes")
+export async function createNote(noteData: CreateNote, env: D1Database) {
+  const note = await db(env)
+    .insert(notes)
     .values({
       id: generateUUID(),
       title: noteData.title,
@@ -21,24 +24,27 @@ export async function createNote(noteData: CreateNote, d1: D1Database) {
       date: String(Date.now()),
       author_id: noteData.userId,
     })
-    .returning(["id"])
-    .executeTakeFirst();
+    .returning({ id: notes.id });
 
-  if (!note?.id) {
+  if (!note[0]?.id) {
     throw Error("Something went wrong");
   }
 
-  return note?.id;
+  return note[0].id;
 }
-export async function notesList(userId: string, d1: D1Database) {
+
+export async function notesList(userId: string, env: D1Database) {
   const start = Date.now();
 
-  const noteList = await db(d1)
-    .selectFrom("users")
-    .leftJoin("notes", "users.id", "notes.author_id")
-    .select(["notes.id", "notes.title", "notes.parent_id"])
-    .where("notes.author_id", "=", userId)
-    .execute();
+  const noteList = await db(env)
+    .select({
+      id: notes.id,
+      title: notes.title,
+      parent_id: notes.parent_id,
+    })
+    .from(notes)
+    .leftJoin(users, eq(users.id, notes.author_id))
+    .where(eq(notes.author_id, userId));
 
   const duration = Date.now() - start;
   console.log(`notesList query took ${duration}ms`);
@@ -46,63 +52,72 @@ export async function notesList(userId: string, d1: D1Database) {
   return noteList;
 }
 
-export async function getNoteById(noteId: string, d1: D1Database) {
+export async function getNoteById(noteId: string, env: D1Database) {
   const start = Date.now();
 
-  const note = await db(d1)
-    .selectFrom("notes")
-    .select(["content", "author_id", "public_note", "title"])
-    .where("id", "=", noteId)
-    .executeTakeFirst();
+  const note = await db(env)
+    .select({
+      content: notes.content,
+      author_id: notes.author_id,
+      public_note: notes.public_note,
+      title: notes.title,
+    })
+    .from(notes)
+    .where(eq(notes.id, noteId))
+    .limit(1);
 
   const duration = Date.now() - start;
   console.log(`getNoteById query took ${duration}ms`);
 
-  if (note) return note;
-
-  return null;
+  return note[0] || null;
 }
 
-export async function getAllNoteById(noteId: string, d1: D1Database) {
-  const note = await db(d1)
-    .selectFrom("notes")
-    .select(["content", "author_id", "title", "parent_id", "public_note"])
-    .where("id", "=", noteId)
-    .executeTakeFirst();
-  if (note) return note;
+export async function getAllNoteById(noteId: string, env: D1Database) {
+  const note = await db(env)
+    .select({
+      content: notes.content,
+      author_id: notes.author_id,
+      title: notes.title,
+      parent_id: notes.parent_id,
+      public_note: notes.public_note,
+    })
+    .from(notes)
+    .where(eq(notes.id, noteId))
+    .limit(1);
 
-  return null;
+  return note[0] || null;
 }
 
-export async function getNotesForBeParents(userId: string, d1: D1Database) {
-  const noteList = await db(d1)
-    .selectFrom("users")
-    .leftJoin("notes", "users.id", "notes.author_id")
-    .select(["notes.id", "notes.title"])
-    .where("notes.author_id", "=", userId)
-    .execute();
+export async function getNotesForBeParents(userId: string, env: D1Database) {
+  const noteList = await db(env)
+    .select({
+      id: notes.id,
+      title: notes.title,
+    })
+    .from(notes)
+    .leftJoin(users, eq(users.id, notes.author_id))
+    .where(eq(notes.author_id, userId));
 
   return noteList;
 }
 
-export async function getRelatedNotes(noteId: string, d1: D1Database) {
-  const noteList = await db(d1)
-    .selectFrom("notes")
-    .select(["id", "title"])
-    .where("parent_id", "=", noteId)
-    .limit(50)
-    .offset(0)
-    .execute();
+export async function getRelatedNotes(noteId: string, env: D1Database) {
+  const noteList = await db(env)
+    .select({
+      id: notes.id,
+      title: notes.title,
+    })
+    .from(notes)
+    .where(eq(notes.parent_id, noteId))
+    .limit(50);
 
   return noteList;
 }
 
-export async function deleteNote(noteId: string, d1: D1Database) {
-  const deletedNote = await db(d1)
-    .deleteFrom("notes")
-    .where("notes.id", "=", noteId)
-    .executeTakeFirst();
-  return deletedNote.numDeletedRows;
+export async function deleteNote(noteId: string, env: D1Database) {
+  const result = await db(env).delete(notes).where(eq(notes.id, noteId));
+
+  return result;
 }
 
 export interface UpdateNote {
@@ -115,44 +130,46 @@ export interface UpdateNote {
 export async function updateNote(
   noteData: UpdateNote,
   noteId: string,
-  d1: D1Database
+  env: D1Database
 ) {
   try {
-    const updatedNote = await db(d1)
-      .updateTable("notes")
+    const result = await db(env)
+      .update(notes)
       .set(noteData)
-      .where("id", "=", noteId)
-      .returning(["id"])
-      .executeTakeFirst();
+      .where(eq(notes.id, noteId))
+      .returning({ id: notes.id });
 
-    if (!updatedNote?.id) {
+    if (!result[0]?.id) {
       throw new Error("No note found to update");
     }
 
-    return updatedNote.id;
+    return result[0].id;
   } catch (error) {
     console.error("Error updating note:", error);
     throw new Error("Could not update note");
   }
 }
 
-export async function getPublicNotesByUserId(userId: string, d1: D1Database) {
-  const publicNotes = await db(d1)
-    .selectFrom("notes")
-    .select(["id", "title", "parent_id", "public_note"])
-    .where("author_id", "=", userId)
-    .where("public_note", "=", true)
-    .execute();
+export async function getPublicNotesByUserId(userId: string, env: D1Database) {
+  const publicNotes = await db(env)
+    .select({
+      id: notes.id,
+      title: notes.title,
+      parent_id: notes.parent_id,
+      public_note: notes.public_note,
+    })
+    .from(notes)
+    .where(and(eq(notes.author_id, userId), eq(notes.public_note, true)));
 
   return publicNotes;
 }
 
-export async function getUsernameById(userId: string, d1: D1Database) {
-  const user = await db(d1)
-    .selectFrom("users")
-    .select("name")
-    .where("id", "=", userId)
-    .executeTakeFirst();
+export async function getUsernameById(userId: string, env: D1Database) {
+  const user = await db(env)
+    .select({ name: users.name })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
 
-  return user?.name ?? "User Unkwon";
+  return user[0]?.name ?? "User Unknown";
 }
