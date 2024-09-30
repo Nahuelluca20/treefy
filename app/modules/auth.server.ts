@@ -2,9 +2,11 @@ import type { AppLoadContext, SessionStorage } from "@remix-run/cloudflare";
 import { createCookieSessionStorage } from "@remix-run/cloudflare";
 import { Authenticator } from "remix-auth";
 import { GoogleStrategy } from "remix-auth-google";
-import { User } from "./session.server";
+import { User, UserSchema } from "./session.server";
 import { db } from "~/database/database.server";
 import { generateUUID } from "utils/uuid";
+import { users } from "~/database/schemas/user";
+import { eq } from "drizzle-orm";
 
 type AuthConfig = {
   COOKIE_SESSION_SECRET: string;
@@ -53,23 +55,44 @@ const createGoogleStrategy = (config: AuthConfig, context: AppLoadContext) => {
       const profile_image = profile.photos[0].value;
 
       const findUser = await db(DB)
-        .selectFrom("users")
-        .selectAll()
-        .where("email", "=", email)
-        .executeTakeFirst();
-      if (findUser) return findUser;
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
 
+      if (findUser.length > 0) {
+        const user: User = {
+          id: findUser[0].id,
+          email: findUser[0].email,
+          name: findUser[0].name,
+          profile_image: findUser[0].profile_image || undefined,
+        };
+        return UserSchema.parse(user);
+      }
+
+      // Create user
       const createUser = await db(DB)
-        .insertInto("users")
+        .insert(users)
         .values({
           id: generateUUID(),
           email,
           name,
           profile_image,
         })
-        .returning(["id", "email", "name", "profile_image"])
-        .executeTakeFirstOrThrow();
-      return createUser;
+        .returning();
+
+      if (createUser.length === 0) {
+        throw new Error("Failed to create user");
+      }
+
+      const newUser: User = {
+        id: createUser[0].id,
+        email: createUser[0].email,
+        name: createUser[0].name,
+        profile_image: createUser[0].profile_image || undefined,
+      };
+
+      return UserSchema.parse(newUser);
     }
   );
 };
