@@ -11,6 +11,13 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
   throw redirect("/home");
 }
 
+export function meta() {
+  return [
+    { title: "Login | Treefy" },
+    { name: "description", content: "Sign in to your account using Google" },
+  ];
+}
+
 export default function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
