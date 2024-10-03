@@ -2,12 +2,20 @@ import { json, LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { Form } from "@remix-run/react";
 import { Button } from "~/components/ui/Button";
 import { readUser } from "~/modules/session.server";
+import GoogleIcon from "~/assets/google-icon.svg";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const user = await readUser(context, request);
   if (!user) return json(null);
 
   throw redirect("/home");
+}
+
+export function meta() {
+  return [
+    { title: "Login | Treefy" },
+    { name: "description", content: "Sign in to your account using Google" },
+  ];
 }
 
 export default function Login() {
@@ -24,11 +32,7 @@ export default function Login() {
             className="flex gap-3 w-full font-semibold"
             variant="icon"
           >
-            <img
-              width={20}
-              src="public/google-icon.svg"
-              alt="login with google"
-            />
+            <img width={20} src={GoogleIcon} alt="login with google" />
             Login
           </Button>
         </Form>

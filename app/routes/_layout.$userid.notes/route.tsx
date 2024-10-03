@@ -1,5 +1,5 @@
 import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, MetaFunction } from "@remix-run/react";
 import { getPublicNotesByUserId, getUsernameById } from "~/models/note.server";
 import NotesList from "~/components/notes-list";
 import { assertUUID } from "utils/uuid";
@@ -27,6 +27,20 @@ interface Note {
   title: string;
   parent_id: string | null;
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data) {
+    return [
+      { title: "Public Notes - Not Found" },
+      { description: "Unable to load public notes information." },
+    ];
+  }
+
+  return [
+    { title: `${data.username}'s Public Notes` },
+    { description: `List of public notes shared by ${data.username}` },
+  ];
+};
 
 export default function PublicNotesList() {
   const { publicNotes, username } = useLoaderData<{
