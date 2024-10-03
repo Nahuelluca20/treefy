@@ -13,9 +13,11 @@ export default function Navbar() {
           Treefy
         </Link>
         <div className="flex items-center gap-3">
-          <LinkButton variant="icon" to={`${user?.id}/notes`}>
-            Public Notes
-          </LinkButton>
+          {user?.id && (
+            <LinkButton variant="icon" to={`${user.id}/notes`}>
+              Public Notes
+            </LinkButton>
+          )}
           <ModeToggle />
         </div>
       </div>
