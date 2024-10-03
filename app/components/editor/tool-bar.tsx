@@ -51,7 +51,6 @@ export default function NoteToolbar({
             className="rounded-full"
             placeholder="No parent"
             aria-label={"select parent note"}
-            onOpenChange={function Qa() {}}
             onSelectionChange={(e) => onParentChange(e as string)}
           >
             {parentNotes.map((note) => (

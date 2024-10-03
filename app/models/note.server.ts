@@ -34,8 +34,6 @@ export async function createNote(noteData: CreateNote, env: D1Database) {
 }
 
 export async function notesList(userId: string, env: D1Database) {
-  const start = Date.now();
-
   const noteList = await db(env)
     .select({
       id: notes.id,
@@ -46,15 +44,10 @@ export async function notesList(userId: string, env: D1Database) {
     .leftJoin(users, eq(users.id, notes.author_id))
     .where(eq(notes.author_id, userId));
 
-  const duration = Date.now() - start;
-  console.log(`notesList query took ${duration}ms`);
-
   return noteList;
 }
 
 export async function getNoteById(noteId: string, env: D1Database) {
-  const start = Date.now();
-
   const note = await db(env)
     .select({
       content: notes.content,
@@ -65,9 +58,6 @@ export async function getNoteById(noteId: string, env: D1Database) {
     .from(notes)
     .where(eq(notes.id, noteId))
     .limit(1);
-
-  const duration = Date.now() - start;
-  console.log(`getNoteById query took ${duration}ms`);
 
   return note[0] || null;
 }
