@@ -7,11 +7,15 @@ export default function Navbar() {
   const user: UserSession = useRouteLoaderData("routes/_layout");
 
   return (
-    <aside className="mb-12 md:mb-20 w-full md:max-w-[750px] mx-auto flex flex-col gap-4 items-start ">
-      <div className="w-full flex gap-4 justify-between md:items-start">
-        <Link to="/home" className="text-2xl font-semibold">
+    <header className="border-b border-gray-200 dark:border-gray-800 px-5">
+      <div className="container mx-auto  py-4 flex items-center justify-between max-w-[1100px] ">
+        <Link
+          to="/home"
+          className="text-2xl font-bold text-gray-800 dark:text-gray-200"
+        >
           Treefy
         </Link>
+
         <div className="flex items-center gap-3">
           {user?.id && (
             <LinkButton variant="icon" to={`${user.id}/notes`}>
@@ -21,18 +25,6 @@ export default function Navbar() {
           <ModeToggle />
         </div>
       </div>
-      {/* <SearchField
-        label="Search"
-        onBlur={function Qa() {}}
-        onChange={function Qa() {}}
-        onClear={function Qa() {}}
-        onFocus={function Qa() {}}
-        onFocusChange={function Qa() {}}
-        onKeyDown={function Qa() {}}
-        onKeyUp={function Qa() {}}
-        onSubmit={function Qa() {}}
-      /> */}
-      {/* <h4 className="text-base font-bold">Recents Posts</h4> */}
-    </aside>
+    </header>
   );
 }
