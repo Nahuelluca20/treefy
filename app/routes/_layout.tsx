@@ -12,10 +12,10 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 
 export default function Layout() {
   return (
-    <section className="px-5 max-w-[1200px] w-full mx-auto mt-10 bg-foreground">
+    <section className="px-5 w-full mx-auto bg-foreground">
       <section className="md:gap-20 lg:gap-36 items-start">
         <Navbar />
-        <section className="max-w-[750px] xl:w-full mx-auto px-1">
+        <section className=" max-w-[750px] mt-5 xl:w-full mx-auto px-1">
           <Outlet />
         </section>
       </section>

@@ -1,4 +1,5 @@
 import { Outlet, useNavigation, useParams } from "@remix-run/react";
+import Navbar from "~/components/navigation/nav-bar";
 
 export default function NoteLayout() {
   const { id } = useParams();
@@ -32,8 +33,11 @@ export default function NoteLayout() {
   }
 
   return (
-    <div className="w-full max-w-[750px] mx-auto mt-10 px-5 md:px-0">
-      <Outlet key={id} />
-    </div>
+    <section>
+      <Navbar />
+      <div className="w-full max-w-[750px] mx-auto mt-10 px-5 md:px-0">
+        <Outlet key={id} />
+      </div>
+    </section>
   );
 }
