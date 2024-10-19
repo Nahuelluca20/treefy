@@ -16,6 +16,8 @@ export default function NoteToolbar({
   isPublic,
   parentNotes = [],
 }: INoteToolbar) {
+  const availableParentNotes = parentNotes.filter((note) => !note.parentId);
+
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
       <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-full shadow-lg p-2 flex items-center space-x-2">
@@ -53,7 +55,7 @@ export default function NoteToolbar({
             aria-label={"select parent note"}
             onSelectionChange={(e) => onParentChange(e as string)}
           >
-            {parentNotes.map((note) => (
+            {availableParentNotes.map((note) => (
               <SelectItem aria-label={note.title} key={note.id} id={note.id}>
                 {note.title}
               </SelectItem>

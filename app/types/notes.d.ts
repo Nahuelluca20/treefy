@@ -1,6 +1,7 @@
 export type ParentNotes = {
   id: string;
   title: string;
+  parentId: string;
 }[];
 
 export interface NoteContent {

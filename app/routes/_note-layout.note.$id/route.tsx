@@ -98,17 +98,22 @@ export default function NoteRoute() {
       <footer className="mb-20">
         {relatedNotes.length > 0 && (
           <>
-            <h5 className="underline">Related Notes</h5>
-            <ul>
+            <h4 className="text-lg font-medium mb-4 text-gray-700 dark:text-gray-300">
+              Related Notes
+            </h4>
+            <ul className="space-y-2">
               {relatedNotes.map((note) => (
-                <li key={note.id} className="mt-1">
+                <li
+                  key={note.id}
+                  className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                >
                   <Link
                     to={`/note/${note.id}`}
                     prefetch="viewport"
-                    className="flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+                    className="flex items-center"
                   >
-                    <ChevronRight className="h-3 w-3 mr-1" />
-                    <span>{note.title}</span>
+                    <ChevronRight className="mr-2 h-4 w-4" />
+                    {note.title}
                   </Link>
                 </li>
               ))}

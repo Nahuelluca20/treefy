@@ -83,6 +83,7 @@ export async function getNotesForBeParents(userId: string, env: D1Database) {
     .select({
       id: notes.id,
       title: notes.title,
+      parentId: notes.parent_id,
     })
     .from(notes)
     .leftJoin(users, eq(users.id, notes.author_id))
