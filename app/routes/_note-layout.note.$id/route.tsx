@@ -7,7 +7,7 @@ import {
 } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import YooptaEditor, { createYooptaEditor } from "@yoopta/editor";
-import { ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 import { MARKS } from "~/components/editor/marks";
 import { plugins } from "~/components/editor/plugins";
@@ -75,6 +75,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 export default function NoteRoute() {
   const editor = useMemo(() => createYooptaEditor(), []);
   const { note, relatedNotes, user, author } = useLoaderData<typeof loader>();
+  console.log(author);
 
   return (
     <>
@@ -83,6 +84,15 @@ export default function NoteRoute() {
           <SimpleNoteToolbar />
         </Form>
       )}
+
+      <Link
+        className="mb-6 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+        to={user ? "/home" : `/${author}/notes`}
+      >
+        <ArrowLeft className="mr-1 h-5 w-5 pt-1" />
+        Back to Notes
+      </Link>
+
       {note && (
         <YooptaEditor
           editor={editor}
