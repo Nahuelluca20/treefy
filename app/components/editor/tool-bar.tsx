@@ -2,12 +2,14 @@ import { Save, Globe, Trash2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Select, SelectItem } from "../ui/Select";
 import { ParentNotes } from "~/types/notes";
+import { useParams } from "@remix-run/react";
 
 interface INoteToolbar {
   onParentChange: (id: string) => void;
   handleTogglePublic: (isPublic: boolean) => void;
   isPublic: boolean;
   parentNotes: ParentNotes;
+  parentId?: string;
 }
 
 export default function NoteToolbar({
@@ -15,8 +17,13 @@ export default function NoteToolbar({
   handleTogglePublic,
   isPublic,
   parentNotes = [],
+  parentId = "",
 }: INoteToolbar) {
-  const availableParentNotes = parentNotes.filter((note) => !note.parentId);
+  const { id: currentNoteId } = useParams();
+
+  const availableParentNotes = parentNotes.filter(
+    (note) => !note.parentId && note.id !== currentNoteId
+  );
 
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
@@ -52,9 +59,13 @@ export default function NoteToolbar({
           <Select
             className="rounded-full"
             placeholder="No parent"
-            aria-label={"select parent note"}
+            aria-label="select parent note"
             onSelectionChange={(e) => onParentChange(e as string)}
+            selectedKey={parentId}
           >
+            <SelectItem key="no-parent" id="no-parent">
+              No parent
+            </SelectItem>
             {availableParentNotes.map((note) => (
               <SelectItem aria-label={note.title} key={note.id} id={note.id}>
                 {note.title}
