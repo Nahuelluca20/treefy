@@ -67,7 +67,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="mt-5">
+      <section className="mt-5 pb-10">
         <NotesList
           notes={notes}
           title="Topics - Entry points for Exploration"
