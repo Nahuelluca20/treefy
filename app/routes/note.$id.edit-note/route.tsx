@@ -115,7 +115,7 @@ export default function EditNote() {
   return (
     <>
       <Navbar />
-      <div className="w-full max-w-[750px] mx-auto mt-10 px-5 md:px-0">
+      <div className="w-full max-w-[300px] sm:max-w-[600px] md:max-w-[750px] mx-auto mt-10 px-5 md:px-0">
         <Form
           method="post"
           onSubmit={() => {

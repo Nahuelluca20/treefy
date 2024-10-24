@@ -75,7 +75,6 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 export default function NoteRoute() {
   const editor = useMemo(() => createYooptaEditor(), []);
   const { note, relatedNotes, user, author } = useLoaderData<typeof loader>();
-  console.log(author);
 
   return (
     <>

@@ -35,7 +35,7 @@ export default function NoteLayout() {
   return (
     <section>
       <Navbar />
-      <div className="w-full max-w-[750px] mx-auto mt-5 px-5 md:px-0">
+      <div className="w-full max-w-[300px] sm:max-w-[600px] md:max-w-[750px] mx-auto mt-5 px-5 md:px-0">
         <Outlet key={id} />
       </div>
     </section>
