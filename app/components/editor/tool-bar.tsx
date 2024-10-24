@@ -3,6 +3,7 @@ import { Button } from "../ui/Button";
 import { Select, SelectItem } from "../ui/Select";
 import { ParentNotes } from "~/types/notes";
 import { useParams } from "@remix-run/react";
+import DeleteButton from "./delete-button";
 
 interface INoteToolbar {
   onParentChange: (id: string) => void;
@@ -20,7 +21,6 @@ export default function NoteToolbar({
   parentId = "",
 }: INoteToolbar) {
   const { id: currentNoteId } = useParams();
-
   const availableParentNotes = parentNotes.filter(
     (note) => !note.parentId && note.id !== currentNoteId
   );
@@ -61,9 +61,9 @@ export default function NoteToolbar({
             placeholder="No parent"
             aria-label="select parent note"
             onSelectionChange={(e) => onParentChange(e as string)}
-            selectedKey={parentId}
+            {...(parentId ? { selectedKey: parentId } : {})}
           >
-            <SelectItem key="no-parent" id="no-parent">
+            <SelectItem key="no-parent" id="">
               No parent
             </SelectItem>
             {availableParentNotes.map((note) => (
@@ -73,16 +73,11 @@ export default function NoteToolbar({
             ))}
           </Select>
         </div>
-        <Button
-          variant="icon"
-          type="submit"
-          name="intent"
-          value="delete"
-          className="p-2 rounded-full text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-800"
-          aria-label="Delete note"
-        >
-          <Trash2 className="h-5 w-5" />
-        </Button>
+        <DeleteButton
+          actionType={
+            currentNoteId ? `/note/${currentNoteId}/edit-note` : "/add-note"
+          }
+        />
       </div>
     </div>
   );
