@@ -1,7 +1,7 @@
 import { Save, Globe, Trash2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Select, SelectItem } from "../ui/Select";
-import { ParentNotes } from "~/types/notes";
+import type { ParentNotes } from "~/types/notes";
 import { useParams } from "@remix-run/react";
 import DeleteButton from "./delete-button";
 

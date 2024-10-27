@@ -1,8 +1,8 @@
 import {
-  ActionFunctionArgs,
+  type ActionFunctionArgs,
   json,
-  LoaderFunctionArgs,
-  MetaFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";

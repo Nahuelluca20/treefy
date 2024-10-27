@@ -1,8 +1,8 @@
 import {
-  ActionFunctionArgs,
+  type ActionFunctionArgs,
   json,
-  LoaderFunctionArgs,
-  MetaFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -19,7 +19,7 @@ import {
 } from "~/models/note.server";
 import NoteToolbar from "~/components/editor/tool-bar";
 import { useNoteEditor } from "~/helpers/use-note-editor.hook";
-import { ParentNotes } from "~/types/notes";
+import type { ParentNotes } from "~/types/notes";
 import { prepareEditorSubmit } from "utils/submit-note";
 import { markdown } from "@yoopta/exports";
 import { checkRateLimit } from "~/utils/check-rate-limit";
@@ -76,7 +76,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
       const noteData = {
         content: String(formData.get("editor")),
         title: String(formData.get("title")),
-        public_note: formData.get("isPublic") === "true" ? true : false,
+        public_note: formData.get("isPublic") === "true",
         parent_id: String(formData.get("parentId")),
       };
 

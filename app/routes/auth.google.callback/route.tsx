@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
+import { type LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { createAuth } from "~/modules/auth.server";
 import { createSessionStorage } from "~/modules/session.server";
 

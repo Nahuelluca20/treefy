@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
 import { PenLine, BookOpen, Share2, Menu, PlayCircle } from "lucide-react";
 import { useState } from "react";
@@ -14,10 +14,10 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction = () => [
-  { title: `Treefy` },
+  { title: "Treefy" },
   {
     name: "description",
-    content: `Clarity in Your Thoughts, Clarity in Your Notes`,
+    content: "Clarity in Your Thoughts, Clarity in Your Notes",
   },
 ];
 export default function LandingPage() {
@@ -32,6 +32,7 @@ export default function LandingPage() {
           <span className="font-bold text-xl text-gray-900">Treefy</span>
         </Link>
         <button
+          type="button"
           className="ml-auto lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
@@ -166,7 +167,7 @@ export default function LandingPage() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full object-cover"
-                ></iframe>
+                />
               </div>
             </div>
           </div>
@@ -184,7 +185,10 @@ export default function LandingPage() {
                 Join thousands of writers who are already improving their
                 writing process with Treefy.
               </p>
-              <button className="bg-blue-600 text-white rounded-md px-6 py-3 text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full sm:w-auto">
+              <button
+                type="button"
+                className="bg-blue-600 text-white rounded-md px-6 py-3 text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full sm:w-auto"
+              >
                 Try Free for 14 Days
               </button>
             </div>
