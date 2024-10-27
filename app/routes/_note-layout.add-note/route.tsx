@@ -1,7 +1,7 @@
 import {
-  ActionFunctionArgs,
+  type ActionFunctionArgs,
   json,
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -14,7 +14,7 @@ import { markdown } from "@yoopta/exports";
 import { requireUser } from "~/modules/session.server";
 import { createNote, getNotesForBeParents } from "~/models/note.server";
 import NoteToolbar from "~/components/editor/tool-bar";
-import { ParentNotes } from "~/types/notes";
+import type { ParentNotes } from "~/types/notes";
 import { prepareEditorSubmit } from "utils/submit-note";
 import { useNoteEditor } from "~/helpers/use-note-editor.hook";
 import { checkRateLimit } from "~/utils/check-rate-limit";
@@ -47,7 +47,7 @@ export async function action({ context, request }: ActionFunctionArgs) {
         content: String(formData.get("editor")),
         title: String(formData.get("title")),
         userId: user?.id,
-        public_note: formData.get("isPublic") === "true" ? true : false,
+        public_note: formData.get("isPublic") === "true",
         parent_id: String(formData.get("parentId")),
       };
       await createNote(noteData, context.cloudflare.env.DB);
@@ -67,7 +67,7 @@ export const meta = () => [
   { title: "Create new note" },
   {
     name: "description",
-    content: `Create a new note and share it with your friends`,
+    content: "Create a new note and share it with your friends",
   },
 ];
 

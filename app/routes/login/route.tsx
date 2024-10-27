@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
+import { json, type LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { Form } from "@remix-run/react";
 import { Button } from "~/components/ui/Button";
 import { readUser } from "~/modules/session.server";

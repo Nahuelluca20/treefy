@@ -1,7 +1,7 @@
 import { Link, useRouteLoaderData } from "@remix-run/react";
 import ModeToggle from "../buttons/mode-toggle";
 import { LinkButton } from "../ui/LinkButton";
-import { UserSession } from "~/types/user";
+import type { UserSession } from "~/types/user";
 
 export default function Navbar() {
   const user: UserSession = useRouteLoaderData("routes/_layout");

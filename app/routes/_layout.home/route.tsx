@@ -1,11 +1,15 @@
-import { json, LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import {
+  json,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import NotesList from "~/components/notes-list";
 import { notesList } from "~/models/note.server";
 import { requireUser } from "~/modules/session.server";
-import { UserSession } from "~/types/user";
+import type { UserSession } from "~/types/user";
 import { checkRateLimit } from "~/utils/check-rate-limit";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
