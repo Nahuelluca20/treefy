@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/cloudflare";
+import { type ActionFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { createAuth } from "~/modules/auth.server";
 
 export const loader = () => redirect("/login");

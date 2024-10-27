@@ -21,6 +21,7 @@ const NoteItem = ({ note, notes }: { note: Note; notes: Note[] }) => {
     <li className="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
       <div className="flex items-center w-full text-left py-3">
         <button
+          type="button"
           className="mr-2 p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Collapse" : "Expand"}

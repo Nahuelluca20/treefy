@@ -7,10 +7,10 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import stylesheet from "./styles/tailwind.css?url";
-import { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
+import type { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
 import {
   ThemeProvider,
-  Theme,
+  type Theme,
   PreventFlashOnWrongTheme,
   useTheme,
 } from "remix-themes";

@@ -1,5 +1,5 @@
-import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { useLoaderData, MetaFunction } from "@remix-run/react";
+import { json, type LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { useLoaderData, type MetaFunction } from "@remix-run/react";
 import { getPublicNotesByUserId, getUsernameById } from "~/models/note.server";
 import NotesList from "~/components/notes-list";
 import { assertUUID } from "utils/uuid";

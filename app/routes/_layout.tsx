@@ -1,8 +1,8 @@
-import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { json, type LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { Outlet } from "@remix-run/react";
 import Navbar from "~/components/navigation/nav-bar";
 import { readUser } from "~/modules/session.server";
-import { UserSession } from "~/types/user";
+import type { UserSession } from "~/types/user";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const user: UserSession = await readUser(context, request);
