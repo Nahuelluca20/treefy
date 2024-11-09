@@ -3,9 +3,10 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/cloudflare";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
+import NoteFallBackUI from "~/components/fallback-ui/note-fallback-ui";
 import NotesList from "~/components/notes-list";
 import { notesList } from "~/models/note.server";
 import { requireUser } from "~/modules/session.server";
@@ -41,7 +42,7 @@ export default function Home() {
     title: item.title ?? "",
     parent_id: item.parent_id === "" ? null : item.parent_id,
   }));
-
+  const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
