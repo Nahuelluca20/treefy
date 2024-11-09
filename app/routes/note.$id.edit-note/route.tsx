@@ -6,7 +6,6 @@ import {
   redirect,
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
-import YooptaEditor from "@yoopta/editor";
 import { MARKS } from "~/components/editor/marks";
 import { plugins } from "~/components/editor/plugins";
 import { TOOLS } from "~/components/editor/tools";
@@ -24,6 +23,8 @@ import { prepareEditorSubmit } from "utils/submit-note";
 import { markdown } from "@yoopta/exports";
 import { checkRateLimit } from "~/utils/check-rate-limit";
 import Navbar from "~/components/navigation/nav-bar";
+import { lazy, Suspense } from "react";
+import NoteFallBackUI from "~/components/fallback-ui/note-fallback-ui";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
   const { pathname } = new URL(request.url);
@@ -100,6 +101,8 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 
 export default function EditNote() {
   const { content, parentNotes, noteData } = useLoaderData<typeof loader>();
+  const YooptaEditor = lazy(() => import("@yoopta/editor"));
+
   const {
     isPublic,
     setIsPublic,
@@ -115,7 +118,7 @@ export default function EditNote() {
   return (
     <>
       <Navbar />
-      <div className="w-full max-w-[300px] sm:max-w-[600px] md:max-w-[750px] mx-auto mt-10 px-5 md:px-0">
+      <div className="w-full max-w-[400px] sm:max-w-[600px] md:max-w-[750px] mx-auto mt-10 px-5 md:px-0">
         <Form
           method="post"
           onSubmit={() => {
@@ -162,14 +165,16 @@ export default function EditNote() {
             type="hidden"
             value={parentId ?? ""}
           />
-          <YooptaEditor
-            editor={editor}
-            plugins={plugins}
-            placeholder="Type something"
-            tools={TOOLS}
-            marks={MARKS}
-            value={content}
-          />
+          <Suspense fallback={<NoteFallBackUI />}>
+            <YooptaEditor
+              editor={editor}
+              plugins={plugins}
+              placeholder="Type something"
+              tools={TOOLS}
+              marks={MARKS}
+              value={content}
+            />
+          </Suspense>
         </Form>
       </div>
     </>
