@@ -10,9 +10,9 @@ import stylesheet from "./styles/tailwind.css?url";
 import type { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
 import {
   ThemeProvider,
-  type Theme,
   PreventFlashOnWrongTheme,
   useTheme,
+  type Theme,
 } from "remix-themes";
 
 import { themeSessionResolver } from "./routes/theme-sessions.server";
