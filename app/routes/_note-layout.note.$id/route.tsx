@@ -18,6 +18,7 @@ import SimpleNoteToolbar from "~/components/editor/simple-toolbar";
 import { assertUUID } from "utils/uuid";
 import { checkRateLimit } from "~/utils/check-rate-limit";
 import NoteFallBackUI from "~/components/fallback-ui/note-fallback-ui";
+import RelatedNotesFallBackUI from "~/components/fallback-ui/related-notes-fallback-ui";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
   const { pathname } = new URL(request.url);
@@ -106,7 +107,7 @@ export default function NoteRoute() {
         />
       </Suspense>
 
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<RelatedNotesFallBackUI />}>
         <Await resolve={relatedNotes}>
           {(relatedNotes) =>
             relatedNotes && (
