@@ -7,14 +7,10 @@ import {
   LeafIcon,
   PenIcon,
   ShareIcon,
-  SunIcon,
-  MoonIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Theme, useTheme } from "remix-themes";
 import ModeToggle from "~/components/buttons/mode-toggle";
 import { Button } from "~/components/ui/Button";
-import { LinkButton } from "~/components/ui/LinkButton";
 import { readUser } from "~/modules/session.server";
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
@@ -34,7 +30,6 @@ export const meta: MetaFunction = () => [
 export default function LandingPage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useTheme();
   const user = useLoaderData<typeof loader>();
 
   useEffect(() => {

@@ -15,6 +15,7 @@ export default defineConfig({
   plugins: [
     remixCloudflareDevProxy(),
     remix({
+      ignoredRouteFiles: ["**/*server.ts", "**/*.css?url"],
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
