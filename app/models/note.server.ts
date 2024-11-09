@@ -3,6 +3,7 @@ import { db } from "~/database/database.server";
 import { generateUUID } from "utils/uuid";
 import { notes } from "~/database/schemas/notes";
 import { users } from "~/database/schemas/user";
+import { sleep } from "utils/sleep";
 
 interface CreateNote {
   content: string;
@@ -48,6 +49,7 @@ export async function notesList(userId: string, env: D1Database) {
 }
 
 export async function getNoteById(noteId: string, env: D1Database) {
+  // await sleep(1);
   const note = await db(env)
     .select({
       content: notes.content,
@@ -93,6 +95,7 @@ export async function getNotesForBeParents(userId: string, env: D1Database) {
 }
 
 export async function getRelatedNotes(noteId: string, env: D1Database) {
+  // await sleep(3);
   const noteList = await db(env)
     .select({
       id: notes.id,
@@ -103,6 +106,18 @@ export async function getRelatedNotes(noteId: string, env: D1Database) {
     .limit(50);
 
   return noteList;
+}
+
+export async function getNoteTitle(noteId: string, env: D1Database) {
+  const note = await db(env)
+    .select({
+      title: notes.title,
+    })
+    .from(notes)
+    .where(eq(notes.id, noteId))
+    .limit(1);
+
+  return note[0] || null;
 }
 
 export async function deleteNote(noteId: string, env: D1Database) {
