@@ -7,7 +7,6 @@ import {
 } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
 import { MARKS } from "~/components/editor/marks";
-import { plugins } from "~/components/editor/plugins";
 import { TOOLS } from "~/components/editor/tools";
 import { requireUser } from "~/modules/session.server";
 import {
@@ -23,8 +22,9 @@ import { prepareEditorSubmit } from "utils/submit-note";
 import { markdown } from "@yoopta/exports";
 import { checkRateLimit } from "~/utils/check-rate-limit";
 import Navbar from "~/components/navigation/nav-bar";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useRef } from "react";
 import NoteFallBackUI from "~/components/fallback-ui/note-fallback-ui";
+import { plugins } from "~/components/editor/plugins";
 
 export async function loader({ context, request, params }: LoaderFunctionArgs) {
   const { pathname } = new URL(request.url);
@@ -102,6 +102,7 @@ export async function action({ context, request, params }: ActionFunctionArgs) {
 export default function EditNote() {
   const { content, parentNotes, noteData } = useLoaderData<typeof loader>();
   const YooptaEditor = lazy(() => import("@yoopta/editor"));
+  const selectionRef = useRef(null);
 
   const {
     isPublic,
@@ -165,15 +166,18 @@ export default function EditNote() {
             type="hidden"
             value={parentId ?? ""}
           />
+
           <Suspense fallback={<NoteFallBackUI />}>
-            <YooptaEditor
-              editor={editor}
-              plugins={plugins}
-              placeholder="Type something"
-              tools={TOOLS}
-              marks={MARKS}
-              value={content}
-            />
+            <div ref={selectionRef}>
+              <YooptaEditor
+                editor={editor}
+                plugins={plugins}
+                placeholder="Type something"
+                tools={TOOLS}
+                marks={MARKS}
+                value={content}
+              />
+            </div>
           </Suspense>
         </Form>
       </div>

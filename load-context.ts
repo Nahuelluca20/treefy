@@ -15,6 +15,9 @@ interface Env {
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
   RATE_LIMITER: string;
+  TOKEN_CF_IMAGES: string;
+  ACCOUNT_ID: string;
+  IMAGE_ACCOUNT_HASH: string;
 }
 
 type Cloudflare = Omit<PlatformProxy<Env>, "dispose">;
