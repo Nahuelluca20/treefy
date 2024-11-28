@@ -5,6 +5,7 @@ import Code from "@yoopta/code";
 import Link from "@yoopta/link";
 import { HeadingOne, HeadingTwo, HeadingThree } from "@yoopta/headings";
 import { NumberedList, BulletedList, TodoList } from "@yoopta/lists";
+import Image from "@yoopta/image";
 
 export const plugins = [
   Paragraph,
@@ -18,4 +19,5 @@ export const plugins = [
   TodoList,
   Link,
   Code,
+  Image,
 ];

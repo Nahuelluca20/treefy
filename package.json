@@ -36,6 +36,7 @@
     "@yoopta/marks": "^4.8.4",
     "@yoopta/paragraph": "^4.8.4",
     "@yoopta/toolbar": "^4.8.4",
+    "cf-images": "^1.0.1",
     "drizzle-orm": "^0.35.2",
     "isbot": "^5.1.17",
     "lucide-react": "^0.453.0",
