@@ -23,6 +23,17 @@ body {
   background: white;
 }
 
+.yoo-image-my-0.yoo-image-flex {
+  width: auto !important;
+}
+@media (max-width: 768px) {
+  .yoo-image-my-0.yoo-image-flex {
+    width: auto !important;
+    max-width: 300px !important;
+    max-height: 300px !important;
+  }
+}
+
 .yoopta-editor {
   width: 750px !important;
 }
